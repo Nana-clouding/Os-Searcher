@@ -3,87 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ハッキングされました</title>
+    <title>OSの判別</title>
     <style>
         body {
-            background-color: black;
-            color: lime;
-            font-family: 'Courier New', Courier, monospace;
+            background-color: #282c34;
+            color: #61dafb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden;
-        }
-
-        #code {
-            width: 100%;
-            height: 100%;
-            white-space: pre-line;
-            overflow: hidden;
-            font-size: 14px;
-            line-height: 1.5;
-            padding: 20px;
-            color: lime;
-        }
-
-        #prank-message {
-            display: none;
-            font-size: 50px;
-            color: red;
             text-align: center;
-            animation: reveal 1s ease-in-out;
+            flex-direction: column;
         }
 
-        @keyframes reveal {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        p {
+            font-size: 24px;
+            color: #ffffff;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .container {
+            background-color: #20232a;
+            padding: 20px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
 <body>
-    <div id="code"></div>
-    <div id="prank-message">ドッキリでした！</div>
+    <div class="container">
+        <h1>ようこそ！</h1>
+        <p>あなたが使用しているOSは：</p>
+        <p id="os-info"></p>
+    </div>
 
     <script>
-        const codeText = `
-        Initializing Hack Sequence...
-        Accessing Smartphone System...
-        Retrieving Sensitive Data...
-        Bypassing Security Protocols...
-        Gaining Root Access...
-        Hacking in Progress...
-        WARNING: Deleting All Files...
-        ERROR: Critical System Failure Imminent...
-        10%
-        30%
-        50%
-        80%
-        100%
-        SYSTEM DESTROYED.`;
+        // OSの判別
+        function detectOS() {
+            let userAgent = window.navigator.userAgent;
+            let os = "不明";
 
-        // 表示する要素
-        const codeElement = document.getElementById('code');
-        let index = 0;
+            if (userAgent.indexOf("Win") !== -1) os = "Windows";
+            if (userAgent.indexOf("Mac") !== -1) os = "MacOS";
+            if (userAgent.indexOf("X11") !== -1) os = "UNIX";
+            if (userAgent.indexOf("Linux") !== -1) os = "Linux";
+            if (userAgent.indexOf("Android") !== -1) os = "Android";
+            if (userAgent.indexOf("iPhone") !== -1 || userAgent.indexOf("iPad") !== -1) os = "iOS";
 
-        // コードを1文字ずつ表示する関数
-        function typeCode() {
-            if (index < codeText.length) {
-                codeElement.innerHTML += codeText.charAt(index);
-                index++;
-                setTimeout(typeCode, 50); // 50msごとに1文字表示
-            }
+            return os;
         }
 
-        // コードの流れを開始
-        typeCode();
-
-        // 8秒後にドッキリメッセージを表示する
-        setTimeout(() => {
-            document.getElementById('code').style.display = 'none';
-            document.getElementById('prank-message').style.display = 'block';
-        }, 8000); // 8秒後に表示を切り替え
+        // OS情報を表示
+        document.getElementById("os-info").textContent = detectOS();
     </script>
 </body>
 </html>

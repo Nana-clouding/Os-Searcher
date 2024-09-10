@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSの判別</title>
+    <title>デバイスとCPU情報</title>
     <style>
         body {
             background-color: #282c34;
@@ -21,22 +21,11 @@
         h1 {
             font-size: 48px;
             margin-bottom: 20px;
-            animation: fadeIn 2s ease-in-out;
         }
 
         p {
             font-size: 24px;
             color: #ffffff;
-            animation: fadeIn 3s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
         }
 
         .container {
@@ -49,29 +38,45 @@
 </head>
 <body>
     <div class="container">
-        <h1>ようこそ！</h1>
-        <p>あなたが使用しているOSは：</p>
-        <p id="os-info"></p>
+        <h1>あなたのデバイス情報</h1>
+        <p id="device-info">判別中...</p>
+        <p id="cpu-info">CPU情報を取得中...</p>
     </div>
 
     <script>
-        // OSの判別
-        function detectOS() {
-            let userAgent = window.navigator.userAgent;
-            let os = "不明";
+        // デバイスの判別
+        function detectDevice() {
+            let userAgent = navigator.userAgent;
+            let deviceType = "PC";
 
-            if (userAgent.indexOf("Win") !== -1) os = "Windows";
-            if (userAgent.indexOf("Mac") !== -1) os = "MacOS";
-            if (userAgent.indexOf("X11") !== -1) os = "UNIX";
-            if (userAgent.indexOf("Linux") !== -1) os = "Linux";
-            if (userAgent.indexOf("Android") !== -1) os = "Android";
-            if (userAgent.indexOf("iPhone") !== -1 || userAgent.indexOf("iPad") !== -1) os = "iOS";
+            if (userAgent.match(/Android/i)) {
+                deviceType = "Androidデバイス";
+            } else if (userAgent.match(/iPhone/i) || userAgent.match(/iPad/i)) {
+                deviceType = "iOSデバイス";
+            } else if (userAgent.match(/Windows Phone/i)) {
+                deviceType = "Windows Phone";
+            } else if (userAgent.match(/Mac/i)) {
+                deviceType = "Macデバイス";
+            } else if (userAgent.match(/Linux/i)) {
+                deviceType = "Linuxデバイス";
+            }
 
-            return os;
+            return deviceType;
         }
 
-        // OS情報を表示
-        document.getElementById("os-info").textContent = detectOS();
+        // CPUのスレッド数を取得
+        function getCPUInfo() {
+            if (navigator.hardwareConcurrency) {
+                return navigator.hardwareConcurrency + " CPUスレッド";
+            } else {
+                return "CPUスレッド数を取得できません";
+            }
+        }
+
+        // デバイス情報とCPUスレッド数を表示
+        document.getElementById("device-info").textContent = "あなたのデバイスは：" + detectDevice();
+        document.getElementById("cpu-info").textContent = "利用可能なCPUスレッド数：" + getCPUInfo();
     </script>
 </body>
-</html>
+</html>out;
+        }

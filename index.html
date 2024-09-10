@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ハッキングされました</title>
+    <style>
+        body {
+            background-color: black;
+            color: red;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        h1 {
+            font-size: 50px;
+            text-align: center;
+            animation: flicker 1s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.1; }
+        }
+
+        /* 点滅 */
+        .warning {
+            font-size: 20px;
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: flash 0.5s infinite;
+        }
+
+        @keyframes flash {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <h1>あなたのスマホはハッキングされました！</h1>
+    <div class="warning">全てのデータが削除されます...</div>
+
+    <script>
+        // 点滅効果
+        let isRed = true;
+        setInterval(() => {
+            document.body.style.backgroundColor = isRed ? 'black' : 'red';
+            document.body.style.color = isRed ? 'red' : 'black';
+            isRed = !isRed;
+        }, 1000);
+
+        // 警告音を再生する
+        let audio = new Audio('https://www.soundjay.com/button/beep-07.wav');
+        audio.loop = true;
+        audio.play();
+
+        // 5秒後にさらに怖いメッセージを表示
+        setTimeout(() => {
+            document.querySelector('h1').textContent = "データの削除が開始されました...";
+        }, 5000);
+
+        // 10秒後にブラウザを閉じようとする
+        setTimeout(() => {
+            alert("スマホがロックされました");
+            window.close();
+        }, 10000);
+    </script>
+</body>
+</html>
